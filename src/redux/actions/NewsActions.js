@@ -2,8 +2,8 @@ import axios from 'axios';
 
 const apiKey = "1249a8c542694ea184e2b971765647e3";
 
-export const getAllNews = (countrySelected) => (dispatch) => {
-    const url = `https://newsapi.org/v2/top-headlines?country=${countrySelected}&apiKey=${apiKey}`
+export const getAllNews = () => (dispatch) => {
+    const url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`
     axios.get(url)
         .then(function (res) {
             dispatch({
@@ -16,8 +16,8 @@ export const getAllNews = (countrySelected) => (dispatch) => {
         })
 }
 
-export const getNewsByType = (countrySelected, type) => (dispatch) => {
-    const url = `https://newsapi.org/v2/top-headlines?q=${type}&country=${countrySelected}&apiKey=${apiKey}`
+export const getNewsByType = (type) => (dispatch) => {
+    const url = `https://newsapi.org/v2/top-headlines?q=${type}&apiKey=${apiKey}`
     axios.get(url)
         .then(function (res) {
             console.log(res)

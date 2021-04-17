@@ -10,7 +10,8 @@ import {
     MenuItem,
     InputLabel,
     Typography,
-    Button
+    Button,
+    withStyles
 } from '@material-ui/core'
 import NewsCard from './NewsCard';
 
@@ -20,10 +21,9 @@ const useStyles = makeStyles((theme) => ({
         minHeight: '100vh',
         padding: '30px 0px'
     },
-    formDiv: {
-        maxWidth: '500px',
-        with: '100%',
-        margin: '0 auto'
+    buttonHolder: {
+        display: 'flex',
+        justifyContent: 'space-around'
     },
     cardsContainer: {
         margin: theme.spacing(3, 0)
@@ -33,69 +33,45 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'space-around',
         alignItems: 'center'
     }
-}))
+}));
+
+const StyledButton = withStyles({
+    root: {
+        borderRadius: '20px'
+    },
+
+})(Button);
+
+const buttonArray = ["bitcoin", 'usa', 'apple', 'techcrunch', 'Covid']
 
 export default function Categories() {
     const classes = useStyles();
     const dispatch = useDispatch();
     const { news } = useSelector((state) => state.NewsReducer);
 
-    const [countrySelected, setCountrySelected] = useState('in')
-    const [newsType, setNewsType] = useState('');
-
     useEffect(() => {
-        dispatch(getAllNews(countrySelected))
-    }, [dispatch, countrySelected])
+        dispatch(getAllNews())
+    }, [dispatch])
 
-    const handleClick = () => {
+    const handleClick = (text) => {
         console.log("i am called")
-        dispatch(getNewsByType(countrySelected, newsType))
+        dispatch(getNewsByType(text))
     }
 
     return (
         <div className={classes.rootDiv}>
             <Container>
-                <Grid container spacing={3}>
-                    <Grid item lg={6} md={6} sm={12} xs={12}>
-                        <div className={classes.formText} >
-
-                            <TextField
+                <div className={classes.buttonHolder}>
+                    {
+                        buttonArray.map((text, index) => (
+                            <StyledButton
                                 variant="outlined"
-                                fullWidth
                                 color="primary"
-                                placeholder="eg. bitcoin, covid"
-                                label="News category"
-                                value={newsType}
-                                onChange={(e) => setNewsType(e.target.value)}
-                            />
-                            <Button
-                                color="primary"
-                                variant="outlined"
-                                onClick={handleClick}
-                                size="large"
-                            >Search</Button>
-                        </div>
-                    </Grid>
-                    <Grid item lg={6} md={6} sm={12} xs={12}>
-                        <div >
-                            <Select
-                                SelectProps={{
-                                    native: true,
-                                }}
-                                label="Type"
-                                variant="outlined"
-                                fullWidth
-                                color="primary"
-                                onChange={(e) => setCountrySelected(e.target.value)}
-                                value={countrySelected}
-                            >
-                                <MenuItem value="in">India</MenuItem>
-                                <MenuItem value="us">USA</MenuItem>
-                                <MenuItem value="eu">Europe</MenuItem>
-                            </Select>
-                        </div>
-                    </Grid>
-                </Grid>
+                                onClick={() => handleClick(text)}
+                            >{text}</StyledButton>
+                        ))
+                    }
+                </div>
                 <Grid container className={classes.cardsContainer} spacing={3}>
                     {
                         news.length > 0 ?
