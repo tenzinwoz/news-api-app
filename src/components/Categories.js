@@ -3,12 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllNews, getNewsByType } from '../redux/actions/NewsActions';
 import {
     makeStyles,
-    TextField,
     Container,
     Grid,
-    Select,
-    MenuItem,
-    InputLabel,
     Typography,
     Button,
     withStyles

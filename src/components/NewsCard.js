@@ -1,14 +1,7 @@
 import React from 'react';
 import {
-    Card,
     makeStyles,
-    CardActionArea,
-    CardMedia,
     Typography,
-    CardContent,
-    CardActions,
-    Avatar,
-    Box
 } from '@material-ui/core';
 import moment from 'moment'
 import Skeleton from '@material-ui/lab/Skeleton';
